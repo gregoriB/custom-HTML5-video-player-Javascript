@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Player</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class='player'>
+    <video class="video-screen" src="video.mp4" type='video/mp4' poster='placeholder.png' msallowfullscreen webkitallowfullscreen mozallowfullscreen allowfullscreen>
+      Sorry, your browser doesn't support HTML5 video playback.
+    </video>
+    <div class='controls active'>
+      <button class='play start'></button>
+      <input type="range" class='volume-bar' value='70' min='0' max='100'>
+      <input type="range" class='time-bar' value='0' min='0' max=''>
+      <time class='time'>N/A</time>
+      <div class='speed'>
+        <select>
+          <option value='.25'>.25</option>
+          <option value='.5' >.5</option>
+          <option value='.75'>.75</option>
+          <option value='1' selected>1</option>
+          <option value='1.25'>1.25</option>
+          <option value='1.5' >1.5</option>
+          <option value='1.75'>1.75</option>
+          <option value='2'>2</option>
+        </select>
+        speed
+      </div>
+      <button class='fullscreen-button'></button>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
