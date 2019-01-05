@@ -1,4 +1,5 @@
 const controls     = document.querySelector('.controls'),
+      fileChooser  = document.querySelector('.file-chooser'),
       play         = document.querySelector('.play'),
       player       = document.querySelector('.player'),
       speedSelect  = document.querySelector('select'),
@@ -61,8 +62,10 @@ function onMouseUp() {
 }
 
 function updatePlayState() {
-  play.classList.toggle('start');
-  play.classList.toggle('pause');
+  video.paused ? 
+    (play.classList.add('start'), play.classList.remove('pause')) :
+    (play.classList.add('pause'), play.classList.remove('start'));
+
   video.paused ? showUI() : hideUI();
 }
 
@@ -103,6 +106,9 @@ function playVideo(e) {
 
 function adjustVolume(e) {
   if (e.type === 'mousemove' && !isMouseDown) return;
+  if (e.which === 1 ) return video.volume = volumeSlider.value / 100;
+
+  e.preventDefault();
 
   if (e.key === 'ArrowUp' || e.wheelDelta > 0) {
       video.volume = video.volume + .1 >= 1 ? 1 : video.volume + .1;
@@ -114,10 +120,8 @@ function adjustVolume(e) {
       volumeSlider.value = video.volume * 100;
       return;
   }
-  if (e.which === 1 ) return video.volume = volumeSlider.value / 100;
 
   video.volume = volumeSlider.value / 100;  
-  e.preventDefault();
 }
 
 function skip(e) {
@@ -161,6 +165,14 @@ function toggleFullScreen () {
     console.error('cannot exit fullscreen mode');
 }
 
+function selectVideoFile() {
+  const file = this.files[0];
+  const fileUrl = URL.createObjectURL(file);
+  video.type = file.type;
+  video.src = fileUrl;
+  video.poster = 'no-image.png';
+}
+
 controls.addEventListener('mousemove', () => { showUI(), hideUI() });
 controls.addEventListener('mouseout', hideUI);
 controls.addEventListener('mouseup', onMouseUp);
@@ -169,6 +181,8 @@ controls.childNodes.forEach(control => control.addEventListener('mousedown', onM
 controls.childNodes.forEach(control => control.addEventListener('mouseup', onMouseUp));
 controls.childNodes.forEach(control => control.addEventListener('touchstart', onMouseDown));
 controls.childNodes.forEach(control => control.addEventListener('touchend', onMouseUp));
+
+fileChooser.addEventListener('change', selectVideoFile);
 
 fullscreen.addEventListener('click', toggleFullScreen);
 

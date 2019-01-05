@@ -1,6 +1,5 @@
 * {
   margin: 0;
-  overflow: hidden;
   outline: none;
   padding: 0;
   text-align: center;
@@ -77,11 +76,12 @@ video {
   flex-direction: column;
   justify-content: flex-start;
   margin: 30px auto;
+  margin-bottom: 0;
   width: 80%;
 }
 
 .video-screen {
-  transition: .5s;
+  transition: opacity .5s;
   position: relative;
   top: 5%;
   left: 0;
@@ -128,7 +128,7 @@ video {
   background: transparent;
   height: 35px;
   margin: 10px;
-  transition: .1s;
+  transition: scale .1s;
   width: 50px;
 }
 
@@ -180,7 +180,13 @@ video {
   color: white;
   font-weight: bold;
   opacity: .9;
+  margin-right: 5px;
   width: 50px;
+}
+
+.file-chooser {
+  background:black;
+  color: white;
 }
 
 ::-webkit-media-controls {
