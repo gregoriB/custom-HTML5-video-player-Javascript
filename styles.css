@@ -1,7 +1,4 @@
 * {
-  margin: 0;
-  outline: none;
-  padding: 0;
   text-align: center;
   user-select: none;
   -moz-user-select: none;
@@ -17,16 +14,16 @@ button {
   cursor: pointer;
 }
 
-input {
+input[type=range] {
   -webkit-appearance: none;
   align-self: center;
-  height: 20px;
   background: rgb(231, 231, 231);
+  height: 20px;
+  opacity: .7;
   outline: none;
-  opacity: 1;
 }
 
-input::-webkit-slider-thumb {
+input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   background: rgb(0, 174, 255);
@@ -35,17 +32,25 @@ input::-webkit-slider-thumb {
   width: 20px;
 }
 
-input::-moz-slider-thumb {
+input[type=range]::-moz-range-thumb {
   background: rgb(0, 174, 255);
+  border: none;
+  border-radius: 0;
   cursor: pointer;
   height: 20px;
   width: 20px;
+}
+
+input[type=range]::-moz-range-track {
+  background: rgb(231, 231, 231);
+  border: none;
+  width: 100%;
 }
 
 select {
-  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
   background: white;
   border: none;
   cursor: pointer;
@@ -65,35 +70,24 @@ option {
   text-align-last: center;
 }
 
-video {
-  object-fit: fill;
-}
-
 .player {
-  align-content: center;
   background: black;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin: 30px auto;
+  margin: 0 auto;
   margin-bottom: 0;
   width: 80%;
 }
 
 .video-screen {
+  object-fit: fill;
+  margin: 0 auto;
   transition: opacity .5s;
-  position: relative;
-  top: 5%;
-  left: 0;
   width: 100%;
 }
 
 .controls {
   background: rgba(0, 0, 0, 0.521);
-  border: 5px solid rgba(0, 0, 0, 0.05);
-  border-left: none;
-  border-right: none;
-  box-sizing: border-box;
+  border: none;
+  border-top: 5px solid rgba(0, 0, 0, 0.05);
   display: flex;
   height: 10%;
   justify-content: space-around;
@@ -116,10 +110,6 @@ video {
 .controls.active {
   opacity: 1;
   visibility: visible;
-}
-
-.fullscreen {
-  transform: translateY(-49%);
 }
 
 .fullscreen-button {
@@ -168,7 +158,7 @@ video {
 .time {
   align-self: center;
   color: white;
-  font-size: 20px;
+  font-size: 1.1rem;
   font-weight: 600;
   line-height: 24px;
   min-width: 135px;
@@ -187,23 +177,11 @@ video {
 .file-chooser {
   background:black;
   color: white;
+  height: 50px;
 }
 
 ::-webkit-media-controls {
   display:none;
-}
-
-@media only screen and (max-width: 900px) {
-  .player {
-    height: 100vh;
-    margin: 0 auto;
-  }
-  .controls {
-    transform: translateY(-50%);
-  }
-  .fullscreen-button {
-    display: none;
-  }
 }
 
 @media (hover: hover) {

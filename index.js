@@ -1,6 +1,6 @@
 const controls     = document.querySelector('.controls'),
       fileChooser  = document.querySelector('.file-chooser'),
-      play         = document.querySelector('.play'),
+      playButton   = document.querySelector('.play'),
       player       = document.querySelector('.player'),
       speedSelect  = document.querySelector('select'),
       timeCounter  = document.querySelector('time'),
@@ -63,8 +63,8 @@ function onMouseUp() {
 
 function updatePlayState() {
   video.paused ? 
-    (play.classList.add('start'), play.classList.remove('pause')) :
-    (play.classList.add('pause'), play.classList.remove('start'));
+    (playButton.classList.add('start'), playButton.classList.remove('pause')) :
+    (playButton.classList.add('pause'), playButton.classList.remove('start'));
 
   video.paused ? showUI() : hideUI();
 }
@@ -84,7 +84,6 @@ function updateCurrentTime() {
   let seconds = Math.floor(video.currentTime % 60);
   let minutes = Math.floor(video.currentTime / 60);
   seconds = seconds >= 10 ? seconds : '0' + seconds;
-  minutes = minutes >= 10 ? minutes : '0' + minutes;
   timeCounter.innerText = `${minutes}:${seconds} / ${timeTotal}`;
   if (isMouseDown) return;
 
@@ -109,7 +108,6 @@ function adjustVolume(e) {
   if (e.which === 1 ) return video.volume = volumeSlider.value / 100;
 
   e.preventDefault();
-
   if (e.key === 'ArrowUp' || e.wheelDelta > 0) {
       video.volume = video.volume + .1 >= 1 ? 1 : video.volume + .1;
       volumeSlider.value = video.volume * 100;
@@ -137,20 +135,6 @@ function skip(e) {
   timeBar.value = video.currentTime;
 }
 
-function setVideoData() {
-  if (video.readyState) {
-    let seconds = Math.floor(video.duration % 60);
-    let minutes = Math.floor(video.duration / 60);
-    seconds = seconds >= 10 ? seconds : '0' + seconds;
-    minutes = minutes >= 10 ? minutes : '0' + minutes;
-    timeTotal = `${minutes}:${seconds}`;
-    timeBar.max = video.duration;
-    timeCounter.innerText = `00:00 / ${timeTotal}`;
-    updateCurrentTime();
-  }
-  video.volume = volumeSlider.value / 100;
-}
-
 function toggleFullScreen () {
   player.requestFullscreen ? player.requestFullscreen() :
     player.mozRequestFullscreen ? player.mozRequestFullscreen() :
@@ -165,6 +149,12 @@ function toggleFullScreen () {
     console.error('cannot exit fullscreen mode');
 }
 
+function toggleClassFullscreen() {
+  controls.classList.toggle('fullscreen');
+  video.classList.toggle('fullscreen');
+  setVideoSize();
+}
+
 function selectVideoFile() {
   const file = this.files[0];
   const fileUrl = URL.createObjectURL(file);
@@ -172,6 +162,29 @@ function selectVideoFile() {
   video.src = fileUrl;
   video.poster = 'no-image.png';
 }
+
+function setVideoSize() {
+  video.style.width = player.offsetWidth + 'px';
+  controls.style.width = player.offsetWidth + 'px';
+  const margin = (player.offsetHeight - video.offsetHeight) / 2 + 'px';
+  video.style.marginTop = margin;
+}
+
+function setVideoData() {
+  if (video.readyState) {
+    let seconds = Math.floor(video.duration % 60);
+    let minutes = Math.floor(video.duration / 60);
+    seconds = seconds >= 10 ? seconds : '0' + seconds;
+    timeTotal = `${minutes}:${seconds}`;
+    timeBar.max = video.duration;
+    timeCounter.innerText = `0:00 / ${timeTotal}`;
+    updateCurrentTime();
+  }
+  video.volume = volumeSlider.value / 100;
+  setVideoSize();
+}
+
+setVideoData();
 
 controls.addEventListener('mousemove', () => { showUI(), hideUI() });
 controls.addEventListener('mouseout', hideUI);
@@ -186,12 +199,12 @@ fileChooser.addEventListener('change', selectVideoFile);
 
 fullscreen.addEventListener('click', toggleFullScreen);
 
-play.addEventListener('click', playVideo);
+playButton.addEventListener('click', playVideo);
 
-player.addEventListener('fullscreenchange', () => controls.classList.toggle('fullscreen'));
-player.addEventListener('mozfullscreenchange', () => controls.classList.toggle('fullscreen'));
-player.addEventListener('webkitfullscreenchange', () => controls.classList.toggle('fullscreen'));
-player.addEventListener('msfullscreenchange', () => controls.classList.toggle('fullscreen'));
+player.addEventListener('fullscreenchange', toggleClassFullscreen);
+player.addEventListener('mozfullscreenchange', toggleClassFullscreen);
+player.addEventListener('webkitfullscreenchange', toggleClassFullscreen);
+player.addEventListener('msfullscreenchange', toggleClassFullscreen);
 
 speedSelect.addEventListener('click', () => video.playbackRate = speedSelect.value);
 
@@ -205,8 +218,8 @@ video.addEventListener('play', updatePlayState);
 video.addEventListener('pause', updatePlayState);
 video.addEventListener('timeupdate', updateCurrentTime);
 video.addEventListener('mouseout', hideUI);
-video.addEventListener('mousemove', () => { showUI(), hideUI() });
 video.addEventListener('dblclick', toggleFullScreen)
+video.addEventListener('mousemove', () => { showUI(), hideUI() });
 
 volumeSlider.addEventListener('change', adjustVolume);
 volumeSlider.addEventListener('mousemove', adjustVolume);
@@ -214,3 +227,4 @@ volumeSlider.addEventListener('wheel', adjustVolume);
 
 window.addEventListener('keydown', onKeyDown);
 window.addEventListener('keyup', hideUI);
+window.addEventListener('resize', setVideoSize);
