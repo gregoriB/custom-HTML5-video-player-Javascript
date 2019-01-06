@@ -10,7 +10,7 @@
 }
 
 body {
-  background: black;
+  background: rgb(38, 38, 39);
 }
 
 button {
@@ -74,7 +74,6 @@ option {
 }
 
 .player {
-  background: black;
   margin: 0 auto;
   margin-bottom: 0;
   width: 80%;
@@ -82,6 +81,8 @@ option {
 }
 
 .video-screen {
+  background: rgb(188,188,188);
+  display: block;
   object-fit: fill;
   margin: 0 auto;
   transition: opacity .5s;
@@ -89,20 +90,21 @@ option {
 }
 
 .controls {
-  background: rgba(0, 0, 0, 0.521);
-  border: none;
-  border-top: 5px solid rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.5);
+  box-sizing: content-box;
+  border-top: 5px solid rgba(0, 0, 0, 0.02);
+  border-bottom: 5px solid rgba(0, 0, 0, 0);
   display: flex;
   justify-content: space-around;
   opacity: 0;
   margin: 0;
-  padding: 1% 0;
   transition: .5s;
   transition-property: opacity, visibility;
-  transform: translateY(-104%);
+  transform: translateY(-100%);
   visibility: hidden;
   width: 100%;
   z-index: 2;
+  height: 70px;
 }
 
 .controls * {
@@ -181,11 +183,10 @@ option {
 }
 
 .file-chooser {
-  background:black;
   color: white;
   cursor: pointer;
   height: 50px;
-  transform: translateY(-100%);
+  transform: translateY(-80%);
 }
 
 ::-webkit-media-controls {
