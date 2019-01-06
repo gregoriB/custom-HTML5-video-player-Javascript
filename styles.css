@@ -99,7 +99,7 @@ option {
   padding: 1% 0;
   transition: .5s;
   transition-property: opacity, visibility;
-  transform: translateY(-100%);
+  transform: translateY(-104%);
   visibility: hidden;
   width: 100%;
   z-index: 2;

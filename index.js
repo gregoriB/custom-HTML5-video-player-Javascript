@@ -47,7 +47,6 @@ function hideUI() {
   }, 2000);
 }
 
-
 function onMouseDown() {
   isMouseDown = true;
   showUI();
@@ -92,7 +91,7 @@ function updateCurrentTime() {
 
 function playVideo(e) {
   e.preventDefault();
-  if (video.readyState < 2) return;
+  if (!video.readyState >= 2) return;
 
   if (video.paused) {
     video.play();
@@ -154,11 +153,11 @@ function toggleFullScreen () {
 function selectVideoFile() {
   const file = this.files[0];
   const fileUrl = URL.createObjectURL(file);
-  video.preload = 'metadata';
   video.type = file.type;
   video.src = fileUrl + '#t=.5';
   video.poster = '';
   video.play();
+  videoStatus = 'playing';
 }
 
 function setVideoSize() {
@@ -185,7 +184,7 @@ function setVideoData() {
     timeCounter.innerText = `0:00 / ${timeTotal}`;
     updateCurrentTime();
   }
-  video.volume = volumeSlider.value / 100;
+  video.volume = volumeSlider.value / 100;isMouseDown
   setVideoSize();
 }
 
