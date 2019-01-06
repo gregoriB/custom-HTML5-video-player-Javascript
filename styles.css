@@ -1,4 +1,7 @@
 * {
+  margin: 0;
+  outline: none;
+  padding: 0;
   text-align: center;
   user-select: none;
   -moz-user-select: none;
@@ -75,6 +78,7 @@ option {
   margin: 0 auto;
   margin-bottom: 0;
   width: 80%;
+  max-width: 60%;
 }
 
 .video-screen {
@@ -89,11 +93,10 @@ option {
   border: none;
   border-top: 5px solid rgba(0, 0, 0, 0.05);
   display: flex;
-  height: 10%;
   justify-content: space-around;
   opacity: 0;
   margin: 0;
-  padding: 1rem 0;
+  padding: 1% 0;
   transition: .5s;
   transition-property: opacity, visibility;
   transform: translateY(-100%);
@@ -117,16 +120,16 @@ option {
   border: 7px dashed white;
   background: transparent;
   height: 35px;
-  margin: 10px;
+  margin: 0 15px;
   transition: scale .1s;
-  width: 50px;
+  width: 40px;
 }
 
 .play {
   align-self: center;
   height: 40px;
   margin: 0 20px;
-  width: 50px;
+  width: 20px;
 }
 
 .play.start {
@@ -135,8 +138,7 @@ option {
   border-right: none;
   border-left: 35px solid white;
   margin: 0;
-  margin-left: 30px;
-  margin-right: 10px;
+  margin-left: 25px;
 }
 
 .play.pause {
@@ -144,10 +146,14 @@ option {
   border: none;
   border-left: 15px solid white;
   border-right: 15px solid white;
+  padding: 6px;
+  margin: 0;
+  margin-left: 15px;
+  margin-right: 3px;
 }
 
 .volume-bar {
-  margin: 10px;
+  margin: 0 20px;
   width: 80px;
 }
 
@@ -177,7 +183,9 @@ option {
 .file-chooser {
   background:black;
   color: white;
+  cursor: pointer;
   height: 50px;
+  transform: translateY(-100%);
 }
 
 ::-webkit-media-controls {

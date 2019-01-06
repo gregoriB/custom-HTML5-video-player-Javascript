@@ -1,13 +1,13 @@
 const controls     = document.querySelector('.controls'),
       fileChooser  = document.querySelector('.file-chooser'),
+      fullscreen   = document.querySelector('.fullscreen-button'),
       playButton   = document.querySelector('.play'),
       player       = document.querySelector('.player'),
       speedSelect  = document.querySelector('select'),
       timeCounter  = document.querySelector('time'),
       timeBar      = document.querySelector('.time-bar'),
       video        = document.querySelector('video'),
-      volumeSlider = document.querySelector('.volume-bar'),
-      fullscreen   = document.querySelector('.fullscreen-button');
+      volumeSlider = document.querySelector('.volume-bar');
 
 let isMouseDown     = false,
     uiTimeout       = '',
@@ -92,7 +92,7 @@ function updateCurrentTime() {
 
 function playVideo(e) {
   e.preventDefault();
-  if (!video.readyState) return;
+  if (video.readyState < 2) return;
 
   if (video.paused) {
     video.play();
@@ -147,27 +147,32 @@ function toggleFullScreen () {
     document.webkitExitFullscreen ? document.webkitExitFullscreen() :
     document.msExitFullscreen ? document.msExitFullscreen() :   
     console.error('cannot exit fullscreen mode');
-}
-
-function toggleClassFullscreen() {
-  controls.classList.toggle('fullscreen');
-  video.classList.toggle('fullscreen');
+    
   setVideoSize();
 }
 
 function selectVideoFile() {
   const file = this.files[0];
   const fileUrl = URL.createObjectURL(file);
+  video.preload = 'metadata';
   video.type = file.type;
-  video.src = fileUrl;
-  video.poster = 'no-image.png';
+  video.src = fileUrl + '#t=.5';
+  video.poster = '';
+  video.play();
 }
 
 function setVideoSize() {
-  video.style.width = player.offsetWidth + 'px';
-  controls.style.width = player.offsetWidth + 'px';
+  const aspectRatio = video.offsetWidth / video.offsetHeight;
+  const d = document;
+  if ((d.fullscreenElement || d.webkitFullscreenElement || d.mozFullScreenElement || d.msFullscreenElement) &&
+      video.offsetHeight >= window.innerHeight) {
+    video.style.width = window.innerHeight * aspectRatio + 'px';
+  } else {
+    video.style.width = player.offsetWidth + 'px';
+  }
   const margin = (player.offsetHeight - video.offsetHeight) / 2 + 'px';
   video.style.marginTop = margin;
+  controls.style.width = player.offsetWidth + 'px';
 }
 
 function setVideoData() {
@@ -201,10 +206,8 @@ fullscreen.addEventListener('click', toggleFullScreen);
 
 playButton.addEventListener('click', playVideo);
 
-player.addEventListener('fullscreenchange', toggleClassFullscreen);
-player.addEventListener('mozfullscreenchange', toggleClassFullscreen);
-player.addEventListener('webkitfullscreenchange', toggleClassFullscreen);
-player.addEventListener('msfullscreenchange', toggleClassFullscreen);
+player.addEventListener('fullscreenchange', setVideoSize);
+player.addEventListener('msfullscreenchange', setVideoSize);
 
 speedSelect.addEventListener('click', () => video.playbackRate = speedSelect.value);
 
@@ -218,7 +221,7 @@ video.addEventListener('play', updatePlayState);
 video.addEventListener('pause', updatePlayState);
 video.addEventListener('timeupdate', updateCurrentTime);
 video.addEventListener('mouseout', hideUI);
-video.addEventListener('dblclick', toggleFullScreen)
+video.addEventListener('dblclick', toggleFullScreen);
 video.addEventListener('mousemove', () => { showUI(), hideUI() });
 
 volumeSlider.addEventListener('change', adjustVolume);
