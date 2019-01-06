@@ -201,3 +201,11 @@ option {
     transform: scale(1.2);
   }
 }
+
+@media only screen and (max-width: 1200px) {
+  .fullscreen-button {
+    border-width: 3px;
+    height: 25px;
+    width: 40px;
+  }
+}
