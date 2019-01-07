@@ -10,8 +10,8 @@ const controls     = document.querySelector('.controls'),
       volumeSlider = document.querySelector('.volume-bar');
 
 let isMouseDown     = false,
-    uiTimeout       = '',
     timeTotal       = 0,
+    uiTimeout       = '',
     videoStatus     = 'paused';
 
 function onKeyDown(e) {
@@ -158,6 +158,7 @@ function selectVideoFile() {
   video.poster = '';
   video.play();
   videoStatus = 'playing';
+  setTimeout(() => setVideoData(), 50);
 }
 
 function setVideoSize() {
@@ -183,7 +184,7 @@ function setVideoData() {
     timeBar.max = video.duration;
     timeCounter.innerText = `0:00 / ${timeTotal}`;
     updateCurrentTime();
-  }
+  } 
   video.volume = volumeSlider.value / 100;isMouseDown
   setVideoSize();
 }
