@@ -164,15 +164,14 @@ function selectVideoFile() {
 function setVideoSize() {
   const aspectRatio = video.offsetWidth / video.offsetHeight;
   const d = document;
-  if ((d.fullscreenElement || d.webkitFullscreenElement || d.mozFullScreenElement || d.msFullscreenElement) &&
-      video.offsetHeight >= window.innerHeight) {
+  controls.style.width = player.offsetWidth + 'px';
+  if (video.offsetHeight >= player.clientHeight) {
     video.style.width = window.innerHeight * aspectRatio + 'px';
   } else {
     video.style.width = player.offsetWidth + 'px';
   }
   const margin = (player.offsetHeight - video.offsetHeight) / 2 + 'px';
   video.style.marginTop = margin;
-  controls.style.width = player.offsetWidth + 'px';
 }
 
 function setVideoData() {
@@ -215,7 +214,7 @@ timeBar.addEventListener('change', updatetimeBar);
 timeBar.addEventListener('mousemove', updatetimeBar);
 
 video.addEventListener('mouseup', playVideo);
-video.addEventListener('touchstart', playVideo);
+video.addEventListener('touchend', playVideo);
 video.addEventListener('loadedmetadata', setVideoData);
 video.addEventListener('play', updatePlayState);
 video.addEventListener('pause', updatePlayState);

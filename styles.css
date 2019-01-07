@@ -77,13 +77,12 @@ option {
 .player {
   margin: 0 auto;
   margin-bottom: 0;
-  width: 80%;
   max-width: 60%;
-  height: 90vh;
+  height: 100%;
 }
 
 .player:fullscreen .video-screen {
-  background: black;
+  background: rgb(38, 38, 39)
 }
 
 .player:fullscreen .file-chooser {
@@ -211,10 +210,59 @@ option {
   }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1200px) {
+  .player {
+    margin: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+
+  .controls {
+    justify-content: space-evenly;
+  }
+
+  .controls * {
+    margin: 0;
+    margin-left: 8px;
+  }
+
+  .controls {
+    margin: 0;
+  }
+
+  .play {
+    display: none;
+  }
+
+  .time {
+    font-size: 18px;
+    font-weight: 400;
+    max-width: 14%;
+    min-width: 10%;
+    width: 10%;
+  }
+
+  .time-bar {
+    width: 100%;
+  }
+
+  .volume-bar {
+    max-width: 10%;
+  }
+
+  .speed {
+    display: none;
+  }
+
   .fullscreen-button {
     border-width: 3px;
     height: 25px;
+    margin-right: 8px;
+    min-width: 25px;
     width: 40px;
+  }
+
+  .file-chooser {
+    display: none;
   }
 }
