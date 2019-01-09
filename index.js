@@ -192,7 +192,6 @@ setVideoData();
 
 controls.addEventListener('mousemove', () => { showUI(), hideUI() });
 controls.addEventListener('mouseout', hideUI);
-controls.addEventListener('mouseup', onMouseUp);
 
 controls.childNodes.forEach(control => control.addEventListener('mousedown', onMouseDown));
 controls.childNodes.forEach(control => control.addEventListener('mouseup', onMouseUp));
@@ -209,6 +208,7 @@ player.addEventListener('fullscreenchange', setVideoSize);
 player.addEventListener('msfullscreenchange', setVideoSize);
 
 speedSelect.addEventListener('click', () => video.playbackRate = speedSelect.value);
+speedSelect.addEventListener('mouseover', updateCurrentTime);
 
 timeBar.addEventListener('change', updatetimeBar);
 timeBar.addEventListener('mousemove', updatetimeBar);
@@ -230,3 +230,4 @@ volumeSlider.addEventListener('wheel', adjustVolume);
 window.addEventListener('keydown', onKeyDown);
 window.addEventListener('keyup', hideUI);
 window.addEventListener('resize', setVideoSize);
+window.addEventListener('mouseup', onMouseUp);
