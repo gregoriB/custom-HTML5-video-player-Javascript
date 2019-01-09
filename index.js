@@ -208,7 +208,6 @@ player.addEventListener('fullscreenchange', setVideoSize);
 player.addEventListener('msfullscreenchange', setVideoSize);
 
 speedSelect.addEventListener('click', () => video.playbackRate = speedSelect.value);
-speedSelect.addEventListener('mouseover', updateCurrentTime);
 
 timeBar.addEventListener('change', updatetimeBar);
 timeBar.addEventListener('mousemove', updatetimeBar);
