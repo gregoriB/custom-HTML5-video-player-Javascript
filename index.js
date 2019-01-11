@@ -81,7 +81,7 @@ const updatetimeBar = (e) => {
 
 function updateCurrentTime() {
   let seconds = Math.floor(video.currentTime % 60);
-  let minutes = Math.floor(video.currentTime / 60);
+  const minutes = Math.floor(video.currentTime / 60);
   seconds = seconds >= 10 ? seconds : '0' + seconds;
   timeCounter.innerText = `${minutes}:${seconds} / ${timeTotal}`;
   if (isMouseDown) return;
@@ -109,13 +109,11 @@ function adjustVolume(e) {
   e.preventDefault();
   if (e.key === 'ArrowUp' || e.wheelDelta > 0) {
       video.volume = video.volume + .1 >= 1 ? 1 : video.volume + .1;
-      volumeSlider.value = video.volume * 100;
-      return;
+      return volumeSlider.value = video.volume * 100;
   }
   if (e.key === 'ArrowDown' || e.wheelDelta < 0) {
       video.volume = video.volume - .1 <= 0 ? 0 : video.volume - .1;
-      volumeSlider.value = video.volume * 100;
-      return;
+      return volumeSlider.value = video.volume * 100;
   }
 
   video.volume = volumeSlider.value / 100;  
@@ -154,16 +152,15 @@ function selectVideoFile() {
   const file = this.files[0];
   const fileUrl = URL.createObjectURL(file);
   video.type = file.type;
-  video.src = fileUrl + '#t=.5';
+  video.src = fileUrl + '#t=0.5';
   video.poster = '';
   video.play();
   videoStatus = 'playing';
-  setTimeout(() => setVideoData(), 50);
+  setTimeout(() => setVideoData(), 50);  //timeout to prevent empty load of videos
 }
 
 function setVideoSize() {
   const aspectRatio = video.offsetWidth / video.offsetHeight;
-  const d = document;
   controls.style.width = player.offsetWidth + 'px';
   if (video.offsetHeight >= player.clientHeight) {
     video.style.width = window.innerHeight * aspectRatio + 'px';
@@ -177,14 +174,14 @@ function setVideoSize() {
 function setVideoData() {
   if (video.readyState) {
     let seconds = Math.floor(video.duration % 60);
-    let minutes = Math.floor(video.duration / 60);
+    const minutes = Math.floor(video.duration / 60);
     seconds = seconds >= 10 ? seconds : '0' + seconds;
     timeTotal = `${minutes}:${seconds}`;
     timeBar.max = video.duration;
     timeCounter.innerText = `0:00 / ${timeTotal}`;
     updateCurrentTime();
   } 
-  video.volume = volumeSlider.value / 100;isMouseDown
+  video.volume = volumeSlider.value / 100;
   setVideoSize();
 }
 
